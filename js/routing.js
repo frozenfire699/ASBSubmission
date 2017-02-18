@@ -22,7 +22,7 @@ $routeProvider
 
 // Creating the Entry Page Controller
 myApp.controller('entryController', function($scope, $log,
-                                            $localStorage ) {
+                                            $http ) {
 
     //$scope.teamName = 'Empty';
     //$scope.rscs = '';
@@ -34,17 +34,38 @@ myApp.controller('entryController', function($scope, $log,
 
     $scope.entryObj = {
         teamName :'' ,
-        rscs : '',
+        risingChal : '',
         skillsChal : '',
         threeChal : '',
         slamChal : '',
-        asgs : '',
+        asg : '',
         tieBreak : ''
     }
+
+    var self = this;
  $scope.save = function() {
 
      $log.info($scope.entryObj);
-        window.localStorage.setItem("entryObj", JSON.stringify($scope.entryObj));
+     //var config = {
+      //          headers : {
+      //              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+     //           }
+      //      }
+
+//$http.post('http://127.0.0.1:8081', $scope.entryObj, config)
+     var EntryObject = window.JSON.stringify($scope.entryObj);
+     $log.debug(EntryObject);
+     $http.put('http://localhost:8080/messenger/webapi/myresource', EntryObject)
+
+     .success(function (data, status, headers, config) {
+         $log.debug(data);
+         $scope.result = data;
+
+
+        })
+    .error(function (data, status, header, config) {
+
+     });
 
     }
 
@@ -55,7 +76,7 @@ myApp.controller('entryController', function($scope, $log,
                     "DET", "CLE", "CHI", "IND", "MIL",
                     "MEM", "HOU", "SAS", "DAL", "NOP",
                    "LAL", "LAC", "GSW", "PHO", "SAC",];
-    $scope.skillsPlayers = ["Joel Embidd" , "Anthony Davis",
+    $scope.skillsPlayers = [ "Anthony Davis",
                             "Kristaps Prozingis", "Nikola Jokic", "Demarcus Cousins", "Gordon Hayward", "Devin Booker", "John Wall", "Isiah Thomas"];
     $scope.threePlayers = ["Klay Thompson" , "CJ McCollum",
                             "Kyle Lowry", "Eric Gordon", "Kyrie Irving", "Kemba Walker", "Nick Young", "Wesley Matthews"];
@@ -66,15 +87,29 @@ myApp.controller('entryController', function($scope, $log,
 });
 
 // Creating the Result Page Controller
-myApp.controller('resultsController', function($scope, $log) {
+myApp.controller('resultsController', function($scope, $log, $http) {
 
     $scope.name = 'Results';
+    $scope.risingWinner = 'Team World';
+    $scope.skillsWinner = 'Waiting';
+    $scope.threeWinner = 'Waiting';
+    $scope.slamWinner = 'Waiting' ;
+    $scope.asgWinner = 'Waiting';
+    $scope.tieBreakTotal = 'Waiting';
+    $scope.load = function(){
 
-     $scope.load = function(){
+     //$log.info($scope.entryObj);
 
-     $scope.entryObj = JSON.parse(window.localStorage.getItem("entryObj"));
+    $http.get('http://localhost:8080/messenger/webapi/myresource')
+     .then(function(response){
+         $scope.users = response.data;
 
-     $log.info($scope.entryObj);
+        //$scope.users = [entry];
+
+        $log.debug($scope.users);
+        //$scope.entryObj = JSON.parse(entry);
+     });
+
  }
 
 });

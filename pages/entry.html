@@ -1,8 +1,11 @@
+Cut off time for entry is : 17th Feb 2017, 8:30PM ET
+
+<br><br>
 Your Team:  <select ng-model='entryObj.teamName' ng-options = 'team for team in teams'></select>
 <br>
 Rising Star Challenge :
-<input type="radio" ng-model="entryObj.rscs" value = "Team World"> Team World </input>
-<input type="radio" ng-model="entryObj.rscs" value = "Team USA"> Team USA </input>
+<input type="radio" ng-model="entryObj.risingChal" value = "Team World"> Team World </input>
+<input type="radio" ng-model="entryObj.risingChal" value = "Team USA"> Team USA </input>
 <br>
 Skills Challenge : <select ng-model='entryObj.skillsChal' ng-options = 'player for player in skillsPlayers'></select>
 <br>
@@ -11,12 +14,12 @@ Three Point Challenge: <select ng-model='entryObj.threeChal' ng-options = 'playe
 Slam Dunk Challenge : <select ng-model='entryObj.slamChal' ng-options = 'player for player in slamPlayers'></select>
 <br>
 All Star Game :
-<input type="radio" ng-model="entryObj.asgs" value = "Team West"> Team West </input>
-<input type="radio" ng-model="entryObj.asgs" value = "Team East"> Team East </input>
+<input type="radio" ng-model="entryObj.asg" value = "Team West"> Team West </input>
+<input type="radio" ng-model="entryObj.asg" value = "Team East"> Team East </input>
 <br>
-Tie Breaker: Closest to final total, without going over
+Tie Breaker: All Star Game closest to final combined total, without going over
 <input type="text" ng-model="entryObj.tieBreak">
 <br><br>
 <button ng-click="save()">Submit</button>
 
-            <br>
+<br> {{ result }}

@@ -1,16 +1,53 @@
-<button ng-click="load()">Load</button>
+<html>
+    <head>
+    </head>
 
-<br>
-Selected team is {{ entryObj.teamName }}
-<br>
-Select Value is {{ entryObj.rscs }}
-<br>
-Skills Challenge is {{entryObj.skillsChal}}
-<br>
-Three Challenge is {{entryObj.threeChal}}
-<br>
-Slam Dunk Challenge is {{entryObj.slamChal}}
-<br>
-All Star Game  is {{entryObj.asgs}}
-<br>
-Tie Breaker is {{entryObj.tieBreak}}
+   <body ng-controller = "resultsController">
+
+       <table class="table table-bordered">
+
+       </table>
+
+        <table class="table table-condensed">
+            <tr class="info">
+                <td> Team </td>
+                <td> Rising Challenge(0)</td>
+                <td> Skills Challenge(2)</td>
+                <td> Three Challenge(2)</td>
+                <td> Slam Dunk Challenge(1)</td>
+                <td> All Star Game(1)</td>
+                <td> ASB Final Total Score</td>
+            </tr>
+            <tr class="warning">
+                <td> Result </td>
+                <td> {{risingWinner}}</td>
+                <td> {{skillsWinner}}</td>
+                <td> {{threeWinner}}</td>
+                <td> {{slamWinner}}</td>
+                <td> {{asgWinner}}</td>
+                <td> {{tieBreakTotal}}</td>
+            </tr>
+            <tr ng-repeat="user in users">
+                <td class = "info">{{user.teamName}}</td>
+                <td ng-class="{'warning': risingWinner == 'Waiting' , 'success': user.risingChal == risingWinner,
+                'danger': user.risingChal != risingWinner } ">{{user.risingChal}}</td>
+                <td ng-class="{'warning': skillsWinner == 'Waiting' , 'success': user.skillsChal == skillsWinner,
+                'danger': user.skillsChal != skillsWinner } ">{{user.skillsChal}}</td>
+                <td ng-class="{'warning': threeWinner == 'Waiting' , 'success': user.threeChal == threeWinner,
+                'danger': user.threeChal != threeWinner } ">{{user.threeChal}}</td>
+                <td ng-class="{'warning': slamWinner == 'Waiting' , 'success': user.slamChal == slamWinner,
+                'danger': user.slamChal != slamWinner } ">{{user.slamChal}}</td>
+                <td ng-class="{'warning': asgWinner == 'Waiting' , 'success': user.asg == asgWinner,
+                'danger': user.asg != asgWinner } ">{{user.asg}}</td>
+                <td>{{user.tieBreak}}</td>
+            </tr>
+       </table>
+
+        <button ng-click="load()">Load</button>
+
+       <br>
+    </body>
+
+
+</html>
+
